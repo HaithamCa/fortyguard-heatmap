@@ -46,6 +46,8 @@ export async function submitHeatmap(payload: HeatmapPayload): Promise<any> {
   const url = `${BASE_URL}/heatmaps`;
   const res = await axios.post(url, payload, {
     headers: {
+      // FortyGuard expects the API key in the `api-key` header.
+      "api-key": API_KEY,
       Authorization: `Bearer ${API_KEY}`,
       "Content-Type": "application/json",
     },
@@ -58,6 +60,7 @@ export async function getActivityStatus(id: string): Promise<ActivityStatus> {
   const url = `${BASE_URL}/activities/${encodeURIComponent(id)}`;
   const res = await axios.get(url, {
     headers: {
+      "api-key": API_KEY,
       Authorization: `Bearer ${API_KEY}`,
     },
   });
