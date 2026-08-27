@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import service from "../services/service.js";
+import service from "../services/fortyGuard.service.js";
 
 export const heatmapController = {
   async submitHeatmap(req: Request, res: Response): Promise<void> {
