@@ -43,7 +43,7 @@ function getConfig() {
 
 export async function submitHeatmap(payload: HeatmapPayload): Promise<any> {
   const { BASE_URL, API_KEY } = getConfig();
-  const url = `${BASE_URL}/heatmaps`;
+  const url = `${BASE_URL}/heatmap`;
   const res = await axios.post(url, payload, {
     headers: {
       // FortyGuard expects the API key in the `api-key` header.
