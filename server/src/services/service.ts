@@ -23,17 +23,17 @@ export interface ActivityStatus {
   [key: string]: any;
 }
 
-const BASE_URL = process.env.FORTYGUARD_BASE_URL;
-const API_KEY = process.env.FORTYGUARD_API_KEY;
-
-function ensureConfig(): void {
+function getConfig() {
+  const BASE_URL = process.env.FORTYGUARD_BASE_URL;
+  const API_KEY = process.env.FORTYGUARD_API_KEY;
   if (!BASE_URL || !API_KEY) {
     throw new Error("Missing FortyGuard configuration (FORTYGUARD_BASE_URL or FORTYGUARD_API_KEY)");
   }
+  return { BASE_URL, API_KEY };
 }
 
 export async function submitHeatmap(payload: HeatmapPayload): Promise<any> {
-  ensureConfig();
+  const { BASE_URL, API_KEY } = getConfig();
   const url = `${BASE_URL}/heatmaps`;
   const res = await axios.post(url, payload, {
     headers: {
@@ -45,7 +45,7 @@ export async function submitHeatmap(payload: HeatmapPayload): Promise<any> {
 }
 
 export async function getActivityStatus(id: string): Promise<ActivityStatus> {
-  ensureConfig();
+  const { BASE_URL, API_KEY } = getConfig();
   const url = `${BASE_URL}/activities/${encodeURIComponent(id)}`;
   const res = await axios.get(url, {
     headers: {
