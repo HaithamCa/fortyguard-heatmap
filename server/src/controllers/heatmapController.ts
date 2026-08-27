@@ -13,8 +13,9 @@ export const heatmapController = {
       }
       res.status(200).json({ activityId });
     } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
       console.error("submitHeatmap error:", err);
-      res.status(500).json({ error: "Failed to submit heatmap" });
+      res.status(500).json({ error: "Failed to submit heatmap", details: msg });
     }
   },
 };
