@@ -1,7 +1,6 @@
 import { Router } from "express";
 import type { Request, Response, NextFunction } from "express";
 import { heatmapController } from "../controllers/heatmapController.js";
-import { validateHeatmapPayloadObject } from "../validation/heatmap.validation.js";
 
 const router = Router();
 
@@ -53,16 +52,7 @@ function isGeoJsonPolygonAOI(obj: any): { valid: boolean; message?: string } {
 	return { valid: false, message: "Unsupported 'polygon_aoi' type. Expected one of: FeatureCollection, Feature, Polygon." };
 }
 
-function validateHeatmapPayload(req: Request, res: Response, next: NextFunction) {
-	try {
-		validateHeatmapPayloadObject(req.body);
-		return next();
-	} catch (err) {
-		const message = err instanceof Error ? err.message : String(err);
-		return res.status(400).json({ error: message });
-	}
-}
-
-router.post("/heatmap", logHeatmapRequest, validateHeatmapPayload, heatmapController.submitHeatmap);
+router.post("/heatmap", logHeatmapRequest, heatmapController.submitHeatmap);
+router.get("/status/:activityId", logHeatmapRequest, heatmapController.getStatus);
 
 export default router;
