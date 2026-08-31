@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: heatsafe-api
+    runtime: node
+    rootDir: server
+    buildCommand: npm install
+    startCommand: npm run start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DEV_MOCK
+        value: "false"
+      - key: FORTYGUARD_BASE_URL
+        value: https://api.fortyguard.com/v1
+      - key: FORTYGUARD_API_KEY
+        sync: false
+      - key: PORT
+        value: "8088"
