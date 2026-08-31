@@ -2,7 +2,8 @@
 
 Urban heat intelligence dashboard built on the **FortyGuard Temperature API®**.
 
-**Live demo:** _add your deployed URL after hosting_  
+**Live demo:** https://heatsafe-nine.vercel.app  
+**API:** https://heatsafe-api-xi.vercel.app/api/health  
 **Repository:** https://github.com/HaithamCa/fortyguard-heatmap
 
 HeatSafe helps people and city teams:
@@ -148,6 +149,10 @@ Granularity supported: **60 / 80 / 100** meters. Filter type currently used: **1
 ## Deploy
 
 See [DEPLOY.md](./DEPLOY.md) for Railway/Render + Vercel steps.
+
+### Current production URLs
+- Frontend: https://heatsafe-nine.vercel.app
+- Backend: https://heatsafe-api-xi.vercel.app
 
 Required production env:
 

@@ -2,6 +2,7 @@
 
 **Track fit:** Resilient Cities & Infrastructure · Dashboard · Interactive Map  
 **Repo:** https://github.com/HaithamCa/fortyguard-heatmap  
+**Live demo:** https://heatsafe-nine.vercel.app  
 **Built with:** FortyGuard Temperature API® (async heatmap + status)
 
 ## Problem

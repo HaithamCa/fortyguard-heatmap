@@ -1,4 +1,3 @@
-import React from 'react';
 import { KEY_TEMP_COLORS } from '../utils/risk';
 
 export default function MetricsPanel({ summary, dateTime, areaName }: { summary?: any; dateTime?: any; areaName?: string }) {

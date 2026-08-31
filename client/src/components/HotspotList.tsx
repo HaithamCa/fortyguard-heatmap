@@ -1,4 +1,3 @@
-import React from 'react';
 import { classifyRisk, colorForPoint, type TempRange } from '../utils/risk';
 import { getLatLon, openInGoogleMaps } from '../utils/maps';
 

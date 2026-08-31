@@ -50,5 +50,6 @@ Optional: `client/vercel.json` is included for SPA routing.
 
 ## 4) Submission links to fill in
 - Public repo: https://github.com/HaithamCa/fortyguard-heatmap
-- Live app: `______________________________`
+- Live app: https://heatsafe-nine.vercel.app
+- Backend health: https://heatsafe-api-xi.vercel.app/api/health
 - Demo video: `______________________________`

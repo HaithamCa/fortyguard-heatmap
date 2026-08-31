@@ -1,4 +1,3 @@
-import React from 'react';
 import { KEY_TEMP_COLORS } from '../utils/risk';
 
 export default function TemperatureChart({ data }: { data?: any }) {

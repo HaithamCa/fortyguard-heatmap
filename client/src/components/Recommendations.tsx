@@ -1,4 +1,3 @@
-import React from 'react';
 import { RECOMMENDATIONS } from '../utils/recommendations';
 import { getLatLon, openInGoogleMaps } from '../utils/maps';
 import { classifyRisk, KEY_TEMP_COLORS } from '../utils/risk';

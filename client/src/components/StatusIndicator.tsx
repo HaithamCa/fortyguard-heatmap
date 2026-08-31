@@ -1,4 +1,3 @@
-import React from 'react';
 
 export default function StatusIndicator({ phase, errorMessage }: { phase?: string; errorMessage?: string | null }) {
   const label = phase ?? 'idle';
