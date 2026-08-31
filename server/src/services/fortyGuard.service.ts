@@ -245,41 +245,65 @@ function transformFortyGuardData(raw: any) {
       .filter(Boolean) as Array<{ latitude: number; longitude: number; temperature: number; label?: string }>;
 
     if (allPoints.length > 0) {
-      const sorted = [...allPoints].sort((a, b) => b.temperature - a.temperature);
+      type HotPoint = {
+        latitude: number;
+        longitude: number;
+        temperature: number;
+        label?: string;
+        kind?: string;
+      };
+
+      const sorted: HotPoint[] = [...allPoints].sort((a, b) => b.temperature - a.temperature);
       const avgTarget =
         out.summary?.average ??
         sorted.reduce((s, p) => s + p.temperature, 0) / sorted.length;
 
-      const hottest = { ...sorted[0], kind: 'maximum', label: 'Highest temperature' };
-      const coolest = {
-        ...sorted[sorted.length - 1],
-        kind: 'minimum',
-        label: 'Lowest temperature',
+      const first = sorted[0];
+      const last = sorted[sorted.length - 1];
+      if (!first || !last) {
+        // unreachable when allPoints.length > 0, but keeps strict TS happy
+      } else {
+      const hottest: HotPoint = {
+        latitude: first.latitude,
+        longitude: first.longitude,
+        temperature: first.temperature,
+        label: 'Highest temperature',
+        kind: 'maximum',
       };
-      const nearAvg = [...sorted].sort(
+      const coolest: HotPoint = {
+        latitude: last.latitude,
+        longitude: last.longitude,
+        temperature: last.temperature,
+        label: 'Lowest temperature',
+        kind: 'minimum',
+      };
+      const nearAvgCandidate = [...sorted].sort(
         (a, b) => Math.abs(a.temperature - avgTarget) - Math.abs(b.temperature - avgTarget)
       )[0];
-      const averagePoint = {
-        ...nearAvg,
-        kind: 'average',
+      const nearAvg = nearAvgCandidate ?? first;
+      const averagePoint: HotPoint = {
+        latitude: nearAvg.latitude,
+        longitude: nearAvg.longitude,
+        temperature: nearAvg.temperature,
         label: 'Near average temperature',
+        kind: 'average',
       };
 
       // Spread sample across the full temperature range (not only the hottest)
       const sampleBudget = Math.min(60, sorted.length);
-      const sampled: typeof sorted = [];
+      const sampled: HotPoint[] = [];
       if (sorted.length <= sampleBudget) {
         sampled.push(...sorted);
       } else {
         for (let i = 0; i < sampleBudget; i++) {
           const idx = Math.round((i * (sorted.length - 1)) / (sampleBudget - 1));
-          sampled.push(sorted[idx]);
+          const point = sorted[idx];
+          if (point) sampled.push(point);
         }
       }
 
-      const key = (p: { latitude: number; longitude: number }) =>
-        `${p.latitude.toFixed(5)},${p.longitude.toFixed(5)}`;
-      const byKey = new Map<string, any>();
+      const key = (p: HotPoint) => `${p.latitude.toFixed(5)},${p.longitude.toFixed(5)}`;
+      const byKey = new Map<string, HotPoint>();
       for (const p of sampled) byKey.set(key(p), p);
       // Ensure min / avg / max markers always present
       byKey.set(key(coolest), coolest);
@@ -290,6 +314,7 @@ function transformFortyGuardData(raw: any) {
         (a, b) => b.temperature - a.temperature
       );
       out.keyTemperatures = { minimum: coolest, average: averagePoint, maximum: hottest };
+      }
     }
   }
 
